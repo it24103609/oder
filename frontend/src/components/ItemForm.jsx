@@ -11,32 +11,51 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
       serialNumber: "",
     }
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({
-      ...formData,
-      price: Number(formData.price),
-    });
+    setIsSubmitting(true);
+    try {
+      await onSubmit({
+        ...formData,
+        price: Number(formData.price),
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>
       <h2>{submitText}</h2>
 
-      <label>Item Name</label>
-      <input name="name" value={formData.name} onChange={handleChange} required />
-
-      <label>Category</label>
-      <input name="category" value={formData.category} onChange={handleChange} required />
-
-      <label>Price</label>
+      <label htmlFor="name">Item Name</label>
       <input
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+
+      <label htmlFor="category">Category</label>
+      <input
+        id="category"
+        name="category"
+        value={formData.category}
+        onChange={handleChange}
+        required
+      />
+
+      <label htmlFor="price">Price</label>
+      <input
+        id="price"
         type="number"
         name="price"
         value={formData.price}
@@ -44,8 +63,9 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
         required
       />
 
-      <label>Description</label>
+      <label htmlFor="description">Description</label>
       <textarea
+        id="description"
         name="description"
         rows="4"
         value={formData.description}
@@ -53,13 +73,26 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
         required
       />
 
-      <label>Image URL</label>
-      <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
+      <label htmlFor="imageUrl">Image URL</label>
+      <input
+        id="imageUrl"
+        name="imageUrl"
+        value={formData.imageUrl}
+        onChange={handleChange}
+      />
 
-      <label>Serial Number</label>
-      <input name="serialNumber" value={formData.serialNumber} onChange={handleChange} required />
+      <label htmlFor="serialNumber">Serial Number</label>
+      <input
+        id="serialNumber"
+        name="serialNumber"
+        value={formData.serialNumber}
+        onChange={handleChange}
+        required
+      />
 
-      <button className="btn primary" type="submit">{submitText}</button>
+      <button className="btn primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Saving..." : submitText}
+      </button>
     </form>
   );
 }
