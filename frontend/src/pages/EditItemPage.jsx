@@ -7,6 +7,7 @@ function EditItemPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -22,12 +23,15 @@ function EditItemPage() {
   }, [id]);
 
   const handleUpdate = async (formData) => {
+    setIsSubmitting(true);
     try {
       await updateItem(id, formData);
       navigate("/");
     } catch (error) {
       console.error("Failed to update item", error);
       alert("Failed to update item");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -38,6 +42,7 @@ function EditItemPage() {
       initialValues={item}
       submitText="Update Item"
       onSubmit={handleUpdate}
+      isSubmitting={isSubmitting}
     />
   );
 }
