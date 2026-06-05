@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ItemForm({ initialValues, onSubmit, submitText }) {
+function ItemForm({ initialValues, onSubmit, submitText, isSubmitting }) {
   const [formData, setFormData] = useState(
     initialValues || {
       name: "",
@@ -29,37 +29,70 @@ function ItemForm({ initialValues, onSubmit, submitText }) {
     <form className="form-card" onSubmit={handleSubmit}>
       <h2>{submitText}</h2>
 
-      <label>Item Name</label>
-      <input name="name" value={formData.name} onChange={handleChange} required />
-
-      <label>Category</label>
-      <input name="category" value={formData.category} onChange={handleChange} required />
-
-      <label>Price</label>
+      <label htmlFor="name">Item Name</label>
       <input
+        id="name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        disabled={isSubmitting}
+      />
+
+      <label htmlFor="category">Category</label>
+      <input
+        id="category"
+        name="category"
+        value={formData.category}
+        onChange={handleChange}
+        required
+        disabled={isSubmitting}
+      />
+
+      <label htmlFor="price">Price</label>
+      <input
+        id="price"
         type="number"
         name="price"
         value={formData.price}
         onChange={handleChange}
         required
+        disabled={isSubmitting}
       />
 
-      <label>Description</label>
+      <label htmlFor="description">Description</label>
       <textarea
+        id="description"
         name="description"
         rows="4"
         value={formData.description}
         onChange={handleChange}
         required
+        disabled={isSubmitting}
       />
 
-      <label>Image URL</label>
-      <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
+      <label htmlFor="imageUrl">Image URL</label>
+      <input
+        id="imageUrl"
+        name="imageUrl"
+        value={formData.imageUrl}
+        onChange={handleChange}
+        disabled={isSubmitting}
+      />
 
-      <label>Serial Number</label>
-      <input name="serialNumber" value={formData.serialNumber} onChange={handleChange} required />
+      <label htmlFor="serialNumber">Serial Number</label>
+      <input
+        id="serialNumber"
+        name="serialNumber"
+        value={formData.serialNumber}
+        onChange={handleChange}
+        required
+        disabled={isSubmitting}
+      />
 
-      <button className="btn primary" type="submit">{submitText}</button>
+      <button className="btn primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Saving..." : submitText}
+      </button>
     </form>
   );
 }

@@ -120,3 +120,17 @@ body {
   background: #c0392b;
   color: white;
 }
+
+/* UX Improvements: Focus states */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
