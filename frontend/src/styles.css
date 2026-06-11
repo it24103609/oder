@@ -103,6 +103,22 @@ body {
   text-decoration: none;
   display: inline-block;
   font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: 3px solid #64b5f6;
+  outline-offset: 2px;
+}
+
+.form-card input:focus-visible,
+.form-card textarea:focus-visible {
+  outline: 2px solid #1f3c88;
+  border-color: transparent;
 }
 
 .primary {
