@@ -16,7 +16,14 @@ function ItemCard({ item, onDelete }) {
 
       <div className="card-actions">
         <Link className="btn secondary" to={`/edit-item/${item._id}`}>Edit</Link>
-        <button className="btn danger" onClick={() => onDelete(item._id)}>
+        <button
+          className="btn danger"
+          onClick={() => {
+            if (window.confirm("Are you sure you want to delete this item?")) {
+              onDelete(item._id);
+            }
+          }}
+        >
           Delete
         </button>
       </div>
